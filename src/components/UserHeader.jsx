@@ -37,7 +37,10 @@ const UserHeader = ({ user }) => {
                         name
 					</Text>
 					<Flex gap={2} alignItems={"center"}>
-						<Text fontSize={"sm"}>{user.username}</Text>
+						<Text fontSize={"sm"}>
+                            {/* {user.username} */}
+                            Mark
+                        </Text>
 						<Text fontSize={"xs"} bg={"gray.dark"} color={"gray.light"} p={1} borderRadius={"full"}>
 							echothreads.net
 						</Text>
@@ -46,8 +49,10 @@ const UserHeader = ({ user }) => {
 				<Box>
 					{/* {user.profilePic && ( */}
 						<Avatar
-							name={user.name}
-							src={user.profilePic}
+							// name={user.name}
+							// src={user.profilePic}
+                            name='mark'
+                            src='/profile.jfif'
 							size={{
 								base: "md",
 								md: "xl",
@@ -56,8 +61,8 @@ const UserHeader = ({ user }) => {
 					{/* )} */}
 					{/* {!user.profilePic && ( */}
 						<Avatar
-							name={user.name}
-							src='https://bit.ly/broken-link'
+						  name='mark'
+                            src='/profile.jfif'
 							size={{
 								base: "md",
 								md: "xl",

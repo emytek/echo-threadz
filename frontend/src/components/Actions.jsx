@@ -20,7 +20,7 @@ import { useState } from "react";
 // import useShowToast from "../hooks/useShowToast";
 // import postsAtom from "../atoms/postsAtom";
 
-const Actions = () => {
+const Actions = ({ liked, setLiked }) => {
 	// const user = useRecoilValue(userAtom);
 	// const [liked, setLiked] = useState(post.likes.includes(user?._id));
 	// const [posts, setPosts] = useRecoilState(postsAtom);
@@ -110,14 +110,13 @@ const Actions = () => {
 			<Flex gap={3} my={2} onClick={(e) => e.preventDefault()}>
 				<svg
 					aria-label='Like'
-					// color={liked ? "rgb(237, 73, 86)" : ""}
-					color="rgb(237, 73, 86)"
-					// fill={liked ? "rgb(237, 73, 86)" : "transparent"}
-					fill="rgb(237, 73, 86)"
+					color={liked ? "rgb(237, 73, 86)" : ""}
+					fill={liked ? "rgb(237, 73, 86)" : "transparent"}
 					height='19'
 					role='img'
 					viewBox='0 0 24 22'
 					width='20'
+                    onClick={() => setLiked(!liked)}
 					// onClick={handleLikeAndUnlike}
 				>
 					<path

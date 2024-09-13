@@ -9,6 +9,7 @@ import { useEffect } from "react";
 // import { useRecoilState, useRecoilValue } from "recoil";
 // import userAtom from "../atoms/userAtom";
 import { DeleteIcon } from "@chakra-ui/icons";
+import Comment from "../components/Comment";
 // import postsAtom from "../atoms/postsAtom";
 
 const PostPage = () => {
@@ -97,6 +98,27 @@ const PostPage = () => {
             currentPost.replies[currentPost.replies.length - 1]._id
           }
         /> */}
+        <Comment 
+        comment="Looks really good!"
+        createdAt="2d"
+        likes={100}
+        username="John Smith"
+        userAvatar="/profile.jfif"
+        />
+        <Comment 
+        comment="Cool design!"
+        createdAt="3d"
+        likes={200}
+        username="Jack Doe"
+        userAvatar="/profile.jfif"
+        />
+        <Comment 
+        comment="Nice template!"
+        createdAt="4d"
+        likes={300}
+        username="Jane Doe"
+        userAvatar="/profile.jfif"
+        />
       {/* ))} */}
     </>
   );

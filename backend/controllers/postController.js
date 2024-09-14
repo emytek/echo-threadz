@@ -106,51 +106,52 @@ const likeUnlikePost = async (req, res) => {
 	}
 };
 
-// const replyToPost = async (req, res) => {
-// 	try {
-// 		const { text } = req.body;
-// 		const postId = req.params.id;
-// 		const userId = req.user._id;
-// 		const userProfilePic = req.user.profilePic;
-// 		const username = req.user.username;
+const replyToPost = async (req, res) => {
+	try {
+		const { text } = req.body;
+		const postId = req.params.id;
+		const userId = req.user._id;
+		const userProfilePic = req.user.profilePic;
+		const username = req.user.username;
 
-// 		if (!text) {
-// 			return res.status(400).json({ error: "Text field is required" });
-// 		}
+		if (!text) {
+			return res.status(400).json({ error: "Text field is required" });
+		}
 
-// 		const post = await Post.findById(postId);
-// 		if (!post) {
-// 			return res.status(404).json({ error: "Post not found" });
-// 		}
+		const post = await Post.findById(postId);
+		if (!post) {
+			return res.status(404).json({ error: "Post not found" });
+		}
 
-// 		const reply = { userId, text, userProfilePic, username };
+		const reply = { userId, text, userProfilePic, username };
 
-// 		post.replies.push(reply);
-// 		await post.save();
+		post.replies.push(reply);
+		await post.save();
 
-// 		res.status(200).json(reply);
-// 	} catch (err) {
-// 		res.status(500).json({ error: err.message });
-// 	}
-// };
+		res.status(200).json(reply);
+	} catch (err) {
+		res.status(500).json({ error: err.message });
+	}
+};
 
-// const getFeedPosts = async (req, res) => {
-// 	try {
-// 		const userId = req.user._id;
-// 		const user = await User.findById(userId);
-// 		if (!user) {
-// 			return res.status(404).json({ error: "User not found" });
-// 		}
+//to view posts of your followed users
+const getFeedPosts = async (req, res) => {
+	try {
+		const userId = req.user._id;
+		const user = await User.findById(userId);
+		if (!user) {
+			return res.status(404).json({ error: "User not found" });
+		}
 
-// 		const following = user.following;
+		const following = user.following;
 
-// 		const feedPosts = await Post.find({ postedBy: { $in: following } }).sort({ createdAt: -1 });
+		const feedPosts = await Post.find({ postedBy: { $in: following } }).sort({ createdAt: -1 });
 
-// 		res.status(200).json(feedPosts);
-// 	} catch (err) {
-// 		res.status(500).json({ error: err.message });
-// 	}
-// };
+		res.status(200).json(feedPosts);
+	} catch (err) {
+		res.status(500).json({ error: err.message });
+	}
+};
 
 // const getUserPosts = async (req, res) => {
 // 	const { username } = req.params;
@@ -168,4 +169,4 @@ const likeUnlikePost = async (req, res) => {
 // 	}
 // };
 
-export { createPost, getPost, deletePost, likeUnlikePost };
+export { createPost, getPost, deletePost, likeUnlikePost, replyToPost, getFeedPosts };

@@ -5,7 +5,7 @@ import ChatPage from "./pages/ChatPage";
 import PostPage from "./pages/PostPage";
 import UserPage from "./pages/UserPage";
 import CreatePost from "./components/CreatePost";
-import HomePage from "./pages/Homepage";
+import HomePage from "./pages/HomePage";
 import AuthPage from "./pages/AuthPage";
 import UpdateProfilePage from "./pages/UpdateProfilePage";
 import Header from "./components/Header";
@@ -21,8 +21,10 @@ function App() {
 			<Container maxW={pathname === "/" ? { base: "620px", md: "900px" } : "620px"}>
 				<Header />
 				<Routes>
-					<Route path='/' element={user ? <HomePage /> : <Navigate to='/auth' />} />
-					<Route path='/auth' element={!user ? <AuthPage /> : <Navigate to='/' />} />
+					{/* <Route path='/' element={user ? <HomePage /> : <Navigate to='/auth' />} /> */}
+					<Route path='/' element={<HomePage />} />
+					{/* <Route path='/auth' element={!user ? <AuthPage /> : <Navigate to='/' />} /> */}
+					<Route path='/auth' element={ <AuthPage />} />
 					<Route path='/update' element={user ? <UpdateProfilePage /> : <Navigate to='/auth' />} />
 
 					<Route

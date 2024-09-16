@@ -2,7 +2,7 @@ import User from "../models/userModel.js";
 import Post from "../models/postModel.js";
 import bcrypt from "bcryptjs";
 import generateTokenAndSetCookie from "../utils/helpers/generateTokenAndSetCookie.js";
-// import { v2 as cloudinary } from "cloudinary";
+import { v2 as cloudinary } from "cloudinary";
 // import mongoose from "mongoose";
 
 const getUserProfile = async (req, res) => {
@@ -158,14 +158,14 @@ const updateUser = async (req, res) => {
 			user.password = hashedPassword;
 		}
 
-		// if (profilePic) {
-		// 	if (user.profilePic) {
-		// 		await cloudinary.uploader.destroy(user.profilePic.split("/").pop().split(".")[0]);
-		// 	}
+		if (profilePic) {
+			if (user.profilePic) {
+				await cloudinary.uploader.destroy(user.profilePic.split("/").pop().split(".")[0]);
+			}
 
-		// 	const uploadedResponse = await cloudinary.uploader.upload(profilePic);
-		// 	profilePic = uploadedResponse.secure_url;
-		// }
+			const uploadedResponse = await cloudinary.uploader.upload(profilePic);
+			profilePic = uploadedResponse.secure_url;
+		}
 
 		user.name = name || user.name;
 		user.email = email || user.email;
@@ -176,22 +176,21 @@ const updateUser = async (req, res) => {
 		user = await user.save();
 
 		// Find all posts that this user replied and update username and userProfilePic fields
-		// await Post.updateMany(
-		// 	{ "replies.userId": userId },
-		// 	{
-		// 		$set: {
-		// 			"replies.$[reply].username": user.username,
-		// 			"replies.$[reply].userProfilePic": user.profilePic,
-		// 		},
-		// 	},
-		// 	{ arrayFilters: [{ "reply.userId": userId }] }
-		// );
+		await Post.updateMany(
+			{ "replies.userId": userId },
+			{
+				$set: {
+					"replies.$[reply].username": user.username,
+					"replies.$[reply].userProfilePic": user.profilePic,
+				},
+			},
+			{ arrayFilters: [{ "reply.userId": userId }] }
+		);
 
 		// password should be null in response
-		// user.password = null;
+		user.password = null;
 
-		// res.status(200).json(user);
-		res.status(200).json({message: 'Profile updated successfully'});
+		res.status(200).json(user);
 	} catch (err) {
 		res.status(500).json({ error: err.message });
 		console.log("Error in updateUser: ", err.message);

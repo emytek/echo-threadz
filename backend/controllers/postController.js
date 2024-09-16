@@ -1,6 +1,6 @@
 import Post from "../models/postModel.js";
 import User from "../models/userModel.js";
-// import { v2 as cloudinary } from "cloudinary";
+import { v2 as cloudinary } from "cloudinary";
 
 const createPost = async (req, res) => {
 	try {
@@ -25,10 +25,10 @@ const createPost = async (req, res) => {
 			return res.status(400).json({ error: `Text must be less than ${maxLength} characters` });
 		}
 
-		// if (img) {
-		// 	const uploadedResponse = await cloudinary.uploader.upload(img);
-		// 	img = uploadedResponse.secure_url;
-		// }
+		if (img) {
+			const uploadedResponse = await cloudinary.uploader.upload(img);
+			img = uploadedResponse.secure_url;
+		}
 
 		const newPost = new Post({ postedBy, text, img });
 		await newPost.save();
@@ -65,10 +65,10 @@ const deletePost = async (req, res) => {
 			return res.status(401).json({ error: "Unauthorized to delete post" });
 		}
 
-		// if (post.img) {
-		// 	const imgId = post.img.split("/").pop().split(".")[0];
-		// 	await cloudinary.uploader.destroy(imgId);
-		// }
+		if (post.img) {
+			const imgId = post.img.split("/").pop().split(".")[0];
+			await cloudinary.uploader.destroy(imgId);
+		}
 
 		await Post.findByIdAndDelete(req.params.id);
 
@@ -134,7 +134,6 @@ const replyToPost = async (req, res) => {
 	}
 };
 
-//to view posts of your followed users
 const getFeedPosts = async (req, res) => {
 	try {
 		const userId = req.user._id;
@@ -153,20 +152,20 @@ const getFeedPosts = async (req, res) => {
 	}
 };
 
-// const getUserPosts = async (req, res) => {
-// 	const { username } = req.params;
-// 	try {
-// 		const user = await User.findOne({ username });
-// 		if (!user) {
-// 			return res.status(404).json({ error: "User not found" });
-// 		}
+const getUserPosts = async (req, res) => {
+	const { username } = req.params;
+	try {
+		const user = await User.findOne({ username });
+		if (!user) {
+			return res.status(404).json({ error: "User not found" });
+		}
 
-// 		const posts = await Post.find({ postedBy: user._id }).sort({ createdAt: -1 });
+		const posts = await Post.find({ postedBy: user._id }).sort({ createdAt: -1 });
 
-// 		res.status(200).json(posts);
-// 	} catch (error) {
-// 		res.status(500).json({ error: error.message });
-// 	}
-// };
+		res.status(200).json(posts);
+	} catch (error) {
+		res.status(500).json({ error: error.message });
+	}
+};
 
-export { createPost, getPost, deletePost, likeUnlikePost, replyToPost, getFeedPosts };
+export { createPost, getPost, deletePost, likeUnlikePost, replyToPost, getFeedPosts, getUserPosts };

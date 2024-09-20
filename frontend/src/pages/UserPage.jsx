@@ -19,10 +19,11 @@ const UserPage = () => {
 		const getPosts = async () => {
 			if (!user) return;
 			setFetchingPosts(true);
+      console.log('about to fetch posts::');
 			try {
 				const res = await fetch(`/api/posts/user/${username}`);
 				const data = await res.json();
-				console.log(data);
+				console.log(data, 'test user post');
 				setPosts(data);
 			} catch (error) {
 				showToast("Error", error.message, "error");
@@ -56,6 +57,7 @@ const UserPage = () => {
 				</Flex>
 			)}
 
+      <h2>See Posts</h2>
 			{posts.map((post) => (
 				<Post key={post._id} post={post} postedBy={post.postedBy} />
 			))}

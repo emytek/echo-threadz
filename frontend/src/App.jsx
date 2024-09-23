@@ -15,7 +15,7 @@ import LogoutButton from "./components/LogoutButton";
 
 function App() {
 	const user = useRecoilValue(userAtom);
-	console.log(user, 'Confirm user')
+	// console.log(user, 'Confirm user')
 	const { pathname } = useLocation();
 	return (
 		<Box position={"relative"} w='full'>

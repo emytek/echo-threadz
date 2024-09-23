@@ -14,8 +14,9 @@ export const SocketContextProvider = ({ children }) => {
 	const [onlineUsers, setOnlineUsers] = useState([]);
 	const user = useRecoilValue(userAtom);
 
+    //In dev it should be localhost:5000
 	useEffect(() => {
-		const socket = io("http://localhost:5000", {
+		const socket = io("https://echo-threadz.onrender.com", {
 			query: {
 				userId: user?._id,
 			},
